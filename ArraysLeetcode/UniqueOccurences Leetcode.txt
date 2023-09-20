@@ -1,0 +1,18 @@
+ bool uniqueOccurrences(vector<int>& arr) {
+  unordered_map<int , int> ans;
+  for(int i=0; i<arr.size(); i++)
+  {
+      ans[arr[i]]++;
+  }
+  set <int> count;
+  
+  for(auto it : ans)
+  {  
+       count.insert(it.second);
+  }
+  if(ans.size() ==count.size())
+  {
+    return true;
+  }
+    return false;
+  }
