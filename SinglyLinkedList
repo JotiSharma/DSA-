@@ -1,0 +1,138 @@
+#include <iostream>
+using namespace std;
+
+class Node
+{
+    public:
+    int data;
+    Node*next;
+    
+    //Creating a constructor to be called each time to create a new node
+    Node(int data)
+    {  
+    //initially 
+        this->data=data;
+        this->next=NULL;
+    }
+    ~Node()
+    {  
+        int value= this->data;
+        while(this->next != NULL)
+        {
+         delete next;
+         this->next= NULL;
+        }
+    }
+};
+
+//Insertion at head of the LL
+void insertAtHead(Node*&head , int d)
+{
+    Node*temp= new Node(d);
+    temp->next=head;
+    head=temp;
+}
+
+//Insertion at the tail of LL
+void insertionAtTail(Node* &tail , int d)
+{
+    Node*temp = new Node(d);
+    tail->next=temp;
+    tail=temp;
+}
+
+//Insertion at the Given Position
+void insertAtPosition(Node*&head , Node*&tail, int position , int d)
+{
+    Node*temp=head;
+    int cnt=1;
+    if(position == 1)
+    {
+        insertAtHead(head , d);
+        return;
+    }
+    
+    while(cnt <= position-1)
+    {
+        temp=temp->next;
+        cnt++;
+    }
+    
+    if(temp->next ==NULL)
+    {
+        insertionAtTail(tail , d);
+        return;
+    }
+    Node*NodeToInsert = new Node(d);
+    NodeToInsert->next = temp->next;
+    temp->next = NodeToInsert;
+    
+    
+}
+
+//Deletion in Singly LL
+void deletion(Node*&head , int position )
+{   
+
+    if(position == 1)
+    {    Node*temp=head;
+         head=head->next;
+         temp->next=NULL;
+         delete temp;
+    }
+    else
+    {
+       int cnt=1;
+    Node*prev=NULL;
+     Node*curr=head;
+       while(cnt < position)
+       {
+          prev=curr;
+          curr=curr->next;
+          cnt++;
+       }
+       prev->next= curr->next;
+       curr->next=NULL;
+        delete curr;
+    }
+}
+
+//Traversing A LL
+void print(Node*&head)
+{
+    Node*temp=head;
+    while(temp !=NULL)
+    {
+        cout<<temp->data<<" ";
+        temp=temp->next;
+    }
+}
+int main()
+{
+ 
+ // Creating object for the class
+ Node*obj = new Node(10);
+ cout<<obj->data<<endl;
+  
+ //Initialize head & tail will point to first node as that is the single node
+ Node*head=obj;
+ Node*tail=obj;
+//printing one at a time
+cout<<head->data<<endl;
+//insert at head
+insertAtHead(head , 5);
+//traversing the LL
+print(head);
+//insert at tail
+insertionAtTail(tail, 12);
+print(tail);
+cout<<endl;
+//insert at given position
+insertAtPosition(head ,tail, 2,22);
+print(head);
+cout<<endl;
+deletion(head,3);
+
+ print(head);
+    return 0;
+}
